@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>最終確認テスト｜ビジネスの数学（東洋ケア）</title>
+  <style>
+    :root{
+      --bg:#f6f7fb;
+      --card:#ffffff;
+      --text:#111827;
+      --muted:#6b7280;
+      --line:#e5e7eb;
+      --primary:#2563eb;
+      --primary-soft:#e8efff;
+      --good:#16a34a;
+      --good-soft:#e9f9ef;
+      --warn:#f59e0b;
+      --warn-soft:#fff6e5;
+      --bad:#ef4444;
+      --bad-soft:#ffe8e8;
+      --shadow: 0 10px 25px rgba(0,0,0,.06);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+      color:var(--text);
+      background:linear-gradient(180deg,var(--primary-soft),var(--bg) 180px);
+    }
+    header{
+      padding:24px 16px 12px;
+      max-width:980px;
+      margin:0 auto;
+    }
+    .title{
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+      flex-wrap:wrap;
+    }
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:6px 10px;
+      border-radius:999px;
+      background:var(--primary);
+      color:#fff;
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:.02em;
+    }
+    h1{margin:6px 0 6px; font-size:22px; line-height:1.25;}
+    .sub{margin:0; color:var(--muted); font-size:13px;}
+
+    main{max-width:980px; margin:0 auto; padding:12px 16px 32px;}
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:12px;
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:16px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+
+    .card-h{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      padding:12px 14px;
+      border-bottom:1px solid var(--line);
+      background:linear-gradient(90deg,var(--primary-soft),#fff);
+    }
+
+    .qno{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      font-weight:800;
+    }
+    .tag{
+      font-size:12px;
+      padding:4px 8px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      color:var(--muted);
+      background:#fff;
+      white-space:nowrap;
+    }
+
+    .card-b{padding:14px;}
+
+    .prompt{margin:0 0 12px; font-size:15px; line-height:1.6;}
+
+    .opts{display:grid; gap:10px; margin:0; padding:0; list-style:none;}
+    .opt{
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:10px 10px;
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      background:#fff;
+    }
+    .opt:hover{border-color:#cbd5e1; background:#fbfdff;}
+    .opt input{margin-top:3px;}
+
+    .hint{
+      margin-top:10px;
+      padding:10px 12px;
+      border-radius:12px;
+      background:var(--warn-soft);
+      border:1px solid #fde68a;
+      color:#92400e;
+      font-size:12px;
+      line-height:1.6;
+    }
+
+    .calc{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+      margin-top:8px;
+    }
+    .calc label{font-size:13px; color:var(--muted);}
+    .calc input[type="number"], .calc input[type="text"]{
+      width: 160px;
+      max-width: 100%;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background:#fff;
+      font-size:14px;
+    }
+
+    .meta{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:12px;
+      margin-top:12px;
+    }
+    .meta .row{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:10px;
+    }
+    @media(min-width:820px){
+      .meta{grid-template-columns: 1fr 1fr;}
+      .meta .row{grid-template-columns: 1fr 1fr;}
+    }
+    .meta .field{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:12px;
+      box-shadow:var(--shadow);
+    }
+    .meta label{display:block; font-size:12px; color:var(--muted); margin-bottom:6px;}
+    .meta input{
+      width:100%;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      font-size:14px;
+    }
+
+    .actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+      margin-top:14px;
+    }
+    button{
+      cursor:pointer;
+      border:0;
+      border-radius:12px;
+      padding:10px 14px;
+      font-weight:800;
+      font-size:14px;
+    }
+    .btn-primary{background:var(--primary); color:#fff;}
+    .btn-ghost{background:#fff; border:1px solid var(--line); color:var(--text);}
+
+    .key{
+      display:none;
+      margin-top:12px;
+      padding:12px;
+      border-radius:14px;
+      background:var(--good-soft);
+      border:1px solid #bbf7d0;
+    }
+    .key h3{margin:0 0 8px; font-size:14px;}
+    .key ul{margin:0; padding-left:18px; color:#14532d;}
+    .key li{margin:6px 0; font-size:13px;}
+
+    .footer{
+      margin-top:14px;
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.7;
+    }
+
+    @media print{
+      header{padding:12px 16px 6px;}
+      .card{box-shadow:none; break-inside:avoid; page-break-inside:avoid;}
+      .actions{display:none;}
+      .key{display:none !important;}
+      .page-break{break-after:page; page-break-after:always;}
+      body{background:#fff;}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="title">
+      <span class="badge">最終確認テスト</span>
+      <div>
+        <h1>ビジネスの数学（東洋ケア）</h1>
+        <p class="sub">所要：10〜15分／形式：選択＋計算＋振り返り（税別前提）</p>
+      </div>
+    </div>
+
+    <div class="meta">
+      <div class="field">
+        <label>氏名</label>
+        <input type="text" />
+      </div>
+      <div class="field">
+        <label>実施日</label>
+        <input type="text" />
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <form class="grid" id="quiz">
+
+      <!-- Q1 -->
+      <section class="card">
+        <div class="card-h">
+          <div class="qno">Q1 <span class="tag">① 原価の考え方</span></div>
+          <span class="tag">選択</span>
+        </div>
+        <div class="card-b">
+          <p class="prompt">福祉用具レンタル品について、正しい考え方はどれ？</p>
+          <ul class="opts">
+            <li class="opt"><input type="radio" name="q1" value="A" />A. 貸し出していれば原価は発生しない</li>
+            <li class="opt"><input type="radio" name="q1" value="B" />B. 仕入れた時点で会社の費用になっている</li>
+            <li class="opt"><input type="radio" name="q1" value="C" />C. 解約されたときだけ費用になる</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Q2 -->
+      <section class="card">
+        <div class="card-h">
+          <div class="qno">Q2 <span class="tag">② 利益率（計算）</span></div>
+          <span class="tag">入力</span>
+        </div>
+        <div class="card-b">
+          <p class="prompt">仕入価格 <b>90,000円</b> の商品で、<b>粗利率25％</b> を確保したい。販売価格（税別）はいくら？</p>
+          <div class="calc">
+            <label>回答（円・税別）</label>
+            <input type="number" name="q2" />
+          </div>
+        </div>
+      </section>
+
+      <!-- Q3 -->
+      <section class="card">
+        <div class="card-h">
+          <div class="qno">Q3 <span class="tag">② 利益率（判断）</span></div>
+          <span class="tag">選択</span>
+        </div>
+        <div class="card-b">
+          <p class="prompt">同じ粗利額 <b>30万円</b> の2つの販売があります。会社として、より評価が高いのはどちら？</p>
+          <ul class="opts">
+            <li class="opt"><input type="radio" name="q3" value="A" />A. 売上150万円・仕入120万円</li>
+            <li class="opt"><input type="radio" name="q3" value="B" />B. 売上75万円・仕入45万円</li>
+          </ul>
+        </div>
+      </section>
+
+      <div class="page-break"></div>
+
+      <!-- Q4 -->
+      <section class="card">
+        <div class="card-h">
+          <div class="qno">Q4 <span class="tag">③ 予算（考え方）</span></div>
+          <span class="tag">選択</span>
+        </div>
+        <div class="card-b">
+          <p class="prompt">ある月の予算達成率が <b>85％</b> でした。会社の考え方として最も近いのはどれ？</p>
+          <ul class="opts">
+            <li class="opt"><input type="radio" name="q4" value="A" />A. ほぼ達成できている</li>
+            <li class="opt"><input type="radio" name="q4" value="B" />B. 惜しいが問題ない</li>
+            <li class="opt"><input type="radio" name="q4" value="C" />C. 計画通りにいっていない</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Q5 -->
+      <section class="card">
+        <div class="card-h">
+          <div class="qno">Q5 <span class="tag">③ 予算（計算）</span></div>
+          <span class="tag">入力</span>
+        </div>
+        <div class="card-b">
+          <p class="prompt">月次予算 <b>300万円</b>、実績 <b>330万円</b> の場合、予算達成率は何％？</p>
+          <div class="calc">
+            <label>回答（％）</label>
+            <input type="number" name="q5" />
+          </div>
+        </div>
+      </section>
+
+      <!-- Q6 -->
+      <section class="card">
+        <div class="card-h">
+          <div class="qno">Q6 <span class="tag">④ 月次純増（金額）</span></div>
+          <span class="tag">入力</span>
+        </div>
+        <div class="card-b">
+          <p class="prompt">今月の実績：新規<b>40万円</b>、追加<b>20万円</b>、解約<b>35万円</b>。月次純増金額はいくら？</p>
+          <div class="calc">
+            <label>回答（万円）</label>
+            <input type="number" name="q6" />
+          </div>
+        </div>
+      </section>
+
+      <!-- Q7 -->
+      <section class="card">
+        <div class="card-h">
+          <div class="qno">Q7 <span class="tag">④ 月次純増（考え方）</span></div>
+          <span class="tag">選択</span>
+        </div>
+        <div class="card-b">
+          <p class="prompt">東洋ケアの考え方として最も近いものはどれ？</p>
+          <ul class="opts">
+            <li class="opt"><input type="radio" name="q7" value="A" />A. 契約金額が大きい月が良い月</li>
+            <li class="opt"><input type="radio" name="q7" value="B" />B. 件数を大切にし、必要な支援を積み重ねる</li>
+            <li class="opt"><input type="radio" name="q7" value="C" />C. 解約が出なかった月が一番良い</li>
+          </ul>
+        </div>
+      </section>
+
+      <div class="page-break"></div>
+
+      <!-- Q8 -->
+      <section class="card">
+        <div class="card-h">
+          <div class="qno">Q8 <span class="tag">⑤ 数字の勘違い</span></div>
+          <span class="tag">選択</span>
+        </div>
+        <div class="card-b">
+          <p class="prompt">次のうち、東洋ケアとして正しい数字の見方はどれ？</p>
+          <ul class="opts">
+            <li class="opt"><input type="radio" name="q8" value="A" />A. 忙しかった月は成果が出ている</li>
+            <li class="opt"><input type="radio" name="q8" value="B" />B. 売上が増えれば良い月</li>
+            <li class="opt"><input type="radio" name="q8" value="C" />C. 数字は「東洋ケアの価値観」とセットで判断する</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Q9 -->
+      <section class="card">
+        <div class="card-h">
+          <div class="qno">Q9 <span class="tag">振り返り</span></div>
+          <span class="tag">記述</span>
+        </div>
+        <div class="card-b">
+          <p class="prompt">今日の研修で「数字の見方が変わった」と感じた点を1つ書いてください。</p>
+          <div class="calc" style="align-items:stretch;">
+            <label style="width:100%;">回答</label>
+            <input type="text" name="q9" style="width:100%;" />
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card-h">
+          <div class="qno">提出・確認</div>
+          <span class="tag">任意</span>
+        </div>
+        <div class="card-b">
+          <div class="actions">
+            <button class="btn-ghost" type="button" onclick="window.print()">印刷</button>
+          </div>
+          <p class="footer">
+            ※提出は「印刷」→「PDFに保存」で作成したPDFを提出してください。
+          </p>
+        </div>
+      </section>
+
+    </form>
+  </main>
+
+  
+</body>
+</html>
